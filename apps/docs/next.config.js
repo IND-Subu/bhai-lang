@@ -3,26 +3,34 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require("@sentry/nextjs");
 
+/** @type {import('next').NextConfig} */
 const moduleExports = {
-  // Your existing module.exports
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Prevent Next from bundling better-sqlite3 (native module)
+      config.externals.push({
+        "better-sqlite3": "commonjs better-sqlite3",
+      });
+
+      // Stop Webpack from trying to polyfill Node core APIs
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        module: false,
+      };
+    }
+
+    return config;
+  },
 };
 
 const sentryWebpackPluginOptions = {
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, org, project, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
-
-  silent: true, // Suppresses all logs
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
+  silent: true,
 };
 
-// Make sure adding Sentry options is the last code to run before exporting, to
-// ensure that your source maps include changes from all other Webpack plugins
-module.exports = process.env.SENTRY_AUTH_TOKEN ?
-  withSentryConfig(moduleExports, sentryWebpackPluginOptions) :
-  moduleExports;
+module.exports = process.env.SENTRY_AUTH_TOKEN
+  ? withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+  : moduleExports;

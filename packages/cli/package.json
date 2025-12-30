@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "dev": "node --loader ts-node/esm",
-    "build": "tsup src/* --dts --outDir bin"
+    "build": "tsup src/* --dts --outDir bin --external better-sqlite3 --external bindings"
+
   },
   "repository": {
     "type": "git",

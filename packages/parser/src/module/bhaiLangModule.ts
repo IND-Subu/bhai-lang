@@ -46,6 +46,7 @@ import TokenExecutor from "../components/parser/tokenExecutor";
 import TokenizerImpl from "../components/tokenizer";
 import { Tokenizer } from "../components/tokenizer/types";
 import { SPEC } from "../constants/bhaiLangSpec";
+import CallExpression from "../components/parser/statement/expression/callExpression";
 
 
 export default class BhaiLangModule {
@@ -78,6 +79,7 @@ export default class BhaiLangModule {
   private static _breakStatement?: BreakStatement;
   private static _continueStatement?: ContinueStatement;
   private static _whileStatement?: WhileStatement;
+  private static _callExpression?: CallExpression;
 
   static getTokenizer() {
     if (!this._tokenizer) this._tokenizer = new TokenizerImpl(SPEC);
@@ -326,5 +328,12 @@ export default class BhaiLangModule {
       );
 
     return this._parser;
+  }
+
+    static getCallExpression() {
+    if (!this._callExpression) {
+      this._callExpression = new CallExpression(this.getTokenExecutor());
+    }
+    return this._callExpression;
   }
 }

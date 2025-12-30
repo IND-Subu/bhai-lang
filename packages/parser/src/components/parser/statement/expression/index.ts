@@ -42,6 +42,9 @@ export default abstract class Expression {
       case NodeType.RelationalExpression:
         return BhaiLangModule.getRelationalExpression();
 
+      case NodeType.CallExpression:
+        return BhaiLangModule.getCallExpression();
+
       default:
         return BhaiLangModule.getIndentifierExpression();
     }

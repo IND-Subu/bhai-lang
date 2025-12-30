@@ -2,6 +2,7 @@ import Expression from ".";
 
 import { TokenTypes } from "../../../../constants/bhaiLangSpec";
 import { NodeType } from "../../../../constants/constants";
+import BhaiLangModule from "../../../../module/bhaiLangModule";
 import { ASTNode } from "../../types/nodeTypes";
 
 import Literal from "./literals";
@@ -32,8 +33,19 @@ export default class PrimaryExpression extends Expression {
   }
 
   private _getLeftHandSideExpression() {
-    return Expression.getExpressionImpl(
+    // Get identifier
+    const identifier = Expression.getExpressionImpl(
       NodeType.IdentifierExpression
     ).getExpression();
+
+    // Check if it's a function call
+    if (
+      this._tokenExecutor.getLookahead()?.type ===
+      TokenTypes.OPEN_PARENTHESIS_TYPE
+    ) {
+      return BhaiLangModule.getCallExpression().getCallExpression(identifier);
+    }
+
+    return identifier;
   }
 }

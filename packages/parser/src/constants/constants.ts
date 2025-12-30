@@ -27,4 +27,5 @@ export const NodeType = {
   NullLiteral: "NullLiteral",
   VariableDeclaration: "VariableDeclaration",
   Program: "Program",
+  CallExpression: "CallExpression",
 } as const;

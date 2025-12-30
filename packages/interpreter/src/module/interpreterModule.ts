@@ -23,6 +23,7 @@ import VariableDeclaration from "../components/visitor/variableDeclaration";
 import VariableStatement from "../components/visitor/variableStatement";
 import WhileStatement from "../components/visitor/whileStatement";
 import InvalidStateException from "../exceptions/invalidStateException";
+import CallExpression from "../components/visitor/callExpression";
 
 
 export default class InterpreterModule {
@@ -47,6 +48,8 @@ export default class InterpreterModule {
     [NodeType.WhileStatement]: new WhileStatement(),
     [NodeType.BreakStatement]: new BreakStatement(),
     [NodeType.ContinueStatement]: new ContinueStatement(),
+    [NodeType.CallExpression]: new CallExpression(),
+    
   } as Record<string, Visitor>;
 
   private static _currentScope: Scope;

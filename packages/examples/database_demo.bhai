@@ -1,0 +1,29 @@
+hi bhai
+  bol bhai "=== Database Demo ===";
+  
+  // Connect
+  bhai ye hai conn = database_connect("test2.db");
+  bol bhai conn;
+  
+  // Create table
+  bhai ye hai create = database_execute("test2.db", "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, naam TEXT, umar INTEGER)");
+  bol bhai create;
+  
+  // Insert users
+  bhai ye hai insert1 = database_execute("test2.db", "INSERT INTO users (naam, umar) VALUES ('Rahul', 25)");
+  bol bhai "Inserted:", insert1;
+  
+  bhai ye hai insert2 = database_execute("test2.db", "INSERT INTO users (naam, umar) VALUES ('Priya', 23)");
+  bol bhai "Inserted:", insert2;
+    
+  // Final query
+  bhai ye hai final = database_query("test2.db", "SELECT * FROM users");
+  bol bhai "Remaining:", final;
+
+  bhai ye hai insert6 = database_execute("test2.db", "INSERT INTO users (naam, umar) VALUES ('Subrata', 27)");
+  bol bhai "Inserted:", insert6;
+
+   // Close
+  bhai ye hai close_result = database_close("test2.db");
+  bol bhai close_result;
+bye bhai
