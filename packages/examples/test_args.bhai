@@ -1,9 +1,0 @@
-hi bhai
-  // Test string argument
-  bhai ye hai filename = "test.db";
-  bol bhai "Filename:", filename;
-  
-  // Test function call with literal
-  bhai ye hai result = database_connect("test.db");
-  bol bhai "Result:", result;
-bye bhai
